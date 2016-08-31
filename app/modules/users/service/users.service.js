@@ -30,22 +30,36 @@ System.register(["angular2/core", "angular2/http", "rxjs/add/operator/map"], fun
                 UsersService.prototype.getUsers = function () {
                     return this._http
                         .get(this.USERS_URL)
-                        .map(function (json) { return json.json(); });
+                        .map(function (response) { return response.json(); });
                 };
-                UsersService.prototype.addUser = function (user) {
+                UsersService.prototype.getUser = function (userId) {
                     return this._http
-                        .post(this.USERS_URL, user)
-                        .map(function (json) { return json.json(); });
+                        .get(this.getUserUrl(userId))
+                        .map(function (response) { return response.json(); });
                 };
-                UsersService.prototype.getUser = function (id) {
-                    return this._http.get(this.USERS_URL + "/" + id).map(function (json) { return json.json(); });
+                UsersService.prototype.createUser = function (user) {
+                    return this._http
+                        .post(this.USERS_URL, JSON.stringify(user))
+                        .map(function (response) { return response.json(); });
+                };
+                UsersService.prototype.updateUser = function (userId, user) {
+                    return this._http
+                        .put(this.getUserUrl(userId), JSON.stringify(user))
+                        .map(function (response) { return response.json(); });
+                };
+                UsersService.prototype.deleteUser = function (userId) {
+                    return this._http
+                        .delete(this.getUserUrl(userId))
+                        .map(function (response) { return response.json(); });
+                };
+                UsersService.prototype.getUserUrl = function (userId) {
+                    return this.USERS_URL + "/" + userId;
                 };
                 UsersService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [http_1.Http])
                 ], UsersService);
                 return UsersService;
-                var _a;
             }());
             exports_1("UsersService", UsersService);
         }

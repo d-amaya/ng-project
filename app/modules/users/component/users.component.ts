@@ -31,4 +31,23 @@ export class UsersComponent implements OnInit {
                 () => console.log("Users API consuming is done.")
             )
     }
+
+    deleteUser(user) {
+        console.log(user)
+        var confirmation = confirm("Are you sure you want to delete the user?");
+        if (confirmation) {
+            var index = this.users.indexOf(user);
+            this.users.splice(index, 1);
+
+            this._usersService.deleteUser(user.id)
+                .subscribe(
+                    null,
+                    error => {
+                        console.log(error);
+                        alert("It was not possible to delete the user.");
+                        this.users.splice(index, 0, user);
+                    }
+                );
+        }
+    }
 }

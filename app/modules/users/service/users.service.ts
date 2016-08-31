@@ -3,6 +3,8 @@ import {Http} from "angular2/http";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/map";
 
+import {User} from "./../../../entity/user";
+
 @Injectable()
 export class UsersService {
 
@@ -14,16 +16,34 @@ export class UsersService {
     getUsers(): Observable<any> {
         return this._http
                    .get(this.USERS_URL)
-                   .map(json => json.json());
+                   .map(response => response.json());
     }
 
-    addUser(user: any) {
+    getUser(userId): Observable<any> {
         return this._http
-                   .post(this.USERS_URL, user)
-                   .map(json => json.json());
+                   .get(this.getUserUrl(userId))
+                   .map(response => response.json());
     }
 
-    getUser(id:string): Observable<any> {
-        return this._http.get(this.USERS_URL + "/" + id).map(json => json.json());
+    createUser(user: User) {
+        return this._http
+                   .post(this.USERS_URL, JSON.stringify(user))
+                   .map(response => response.json());
     }
+
+    updateUser(userId, user: User) {
+        return  this._http
+                    .put(this.getUserUrl(userId),JSON.stringify(user))
+                    .map(response => response.json());
+    }
+
+    deleteUser(userId) {
+        return this._http
+                   .delete(this.getUserUrl(userId))
+                   .map(response => response.json());
+    }
+
+    private getUserUrl(userId) {
+ 		return this.USERS_URL + "/" + userId;
+ 	}
 }

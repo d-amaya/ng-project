@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/common", "angular2/router", "./../service/users.service", "./../../../shared/common.validator"], function(exports_1, context_1) {
+System.register(["angular2/core", "angular2/common", "angular2/router", "./../service/users.service", "./../../../shared/common.validator", "./../../../entity/user"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["angular2/core", "angular2/common", "angular2/router", "./../se
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, router_1, users_service_1, common_validator_1;
+    var core_1, common_1, router_1, users_service_1, common_validator_1, user_1;
     var SaveUserComponent;
     return {
         setters:[
@@ -28,6 +28,9 @@ System.register(["angular2/core", "angular2/common", "angular2/router", "./../se
             },
             function (common_validator_1_1) {
                 common_validator_1 = common_validator_1_1;
+            },
+            function (user_1_1) {
+                user_1 = user_1_1;
             }],
         execute: function() {
             SaveUserComponent = (function () {
@@ -37,9 +40,7 @@ System.register(["angular2/core", "angular2/common", "angular2/router", "./../se
                     this._routeParams = _routeParams;
                     this._usersService = _usersService;
                     this.title = "New User";
-                    this.user = {
-                        name: "", email: "", phone: "", address: { street: "", suite: "", city: "", zipcode: "" }
-                    };
+                    this.user = new user_1.User();
                     this.form = this._formBuilder.group({
                         name: ["", common_1.Validators.compose([common_1.Validators.required])],
                         email: ["", common_1.Validators.compose([common_1.Validators.required, common_validator_1.CommonValidators.validEmailFormat])],
@@ -76,10 +77,14 @@ System.register(["angular2/core", "angular2/common", "angular2/router", "./../se
                 };
                 SaveUserComponent.prototype.onSubmit = function () {
                     var _this = this;
-                    console.log(this.form.value);
-                    this._usersService.addUser(this.form.value)
-                        .subscribe(function (res) {
-                        console.log(res);
+                    var saveUserObservable;
+                    if (this.user.id) {
+                        saveUserObservable = this._usersService.updateUser(this.user.id, this.user);
+                    }
+                    else {
+                        saveUserObservable = this._usersService.createUser(this.user);
+                    }
+                    saveUserObservable.subscribe(function (res) {
                         //this.form.markAsPristine();
                         _this._router.navigate(["Users"]);
                     });
@@ -91,10 +96,9 @@ System.register(["angular2/core", "angular2/common", "angular2/router", "./../se
                         styles: ["\n        .ng-touched.ng-invalid {\n            border: 1px solid red !important;\n        }\n    "],
                         providers: [users_service_1.UsersService]
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof common_1.FormBuilder !== 'undefined' && common_1.FormBuilder) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof router_1.RouteParams !== 'undefined' && router_1.RouteParams) === 'function' && _c) || Object, users_service_1.UsersService])
+                    __metadata('design:paramtypes', [common_1.FormBuilder, router_1.Router, router_1.RouteParams, users_service_1.UsersService])
                 ], SaveUserComponent);
                 return SaveUserComponent;
-                var _a, _b, _c;
             }());
             exports_1("SaveUserComponent", SaveUserComponent);
         }

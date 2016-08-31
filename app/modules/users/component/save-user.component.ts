@@ -5,6 +5,7 @@ import {Observable} from "rxjs/Observable";
 
 import {UsersService} from "./../service/users.service";
 import {CommonValidators} from "./../../../shared/common.validator";
+import {User} from "./../../../entity/user";
 
 @Component({
     selector: "create-user",
@@ -20,9 +21,7 @@ export class SaveUserComponent implements CanDeactivate, OnInit {
     form: ControlGroup;
     title: string = "New User";
 
-    user = {
-        name: "", email: "", phone: "", address: { street: "", suite: "", city: "", zipcode: "" }
-    }
+    user = new User();
 
     constructor(private _formBuilder: FormBuilder, 
                 private _router: Router,
@@ -70,12 +69,16 @@ export class SaveUserComponent implements CanDeactivate, OnInit {
     }
 
     onSubmit() {
-        console.log(this.form.value);
-        this._usersService.addUser(this.form.value)
-            .subscribe(res => {
-                console.log(res);
-                //this.form.markAsPristine();
-                this._router.navigate(["Users"]);
-            });
+        var saveUserObservable: Observable<any>; 
+        if (this.user.id) {
+            saveUserObservable = this._usersService.updateUser(this.user.id, this.user);
+        } else {
+            saveUserObservable = this._usersService.createUser(this.user);
+        }
+        
+        saveUserObservable.subscribe(res => {
+            //this.form.markAsPristine();
+            this._router.navigate(["Users"]);
+        });
     }
 }

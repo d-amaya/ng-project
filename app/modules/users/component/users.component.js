@@ -43,6 +43,21 @@ System.register(["angular2/core", "angular2/router", "rxjs/Observable", "rxjs/ad
                     })
                         .subscribe(function (users) { return _this.users = users; }, function (error) { return console.log("An error ocurred when transforming data user."); }, function () { return console.log("Users API consuming is done."); });
                 };
+                UsersComponent.prototype.deleteUser = function (user) {
+                    var _this = this;
+                    console.log(user);
+                    var confirmation = confirm("Are you sure you want to delete the user?");
+                    if (confirmation) {
+                        var index = this.users.indexOf(user);
+                        this.users.splice(index, 1);
+                        this._usersService.deleteUser(user.id)
+                            .subscribe(null, function (error) {
+                            console.log(error);
+                            alert("It was not possible to delete the user.");
+                            _this.users.splice(index, 0, user);
+                        });
+                    }
+                };
                 UsersComponent = __decorate([
                     core_1.Component({
                         selector: "users",
