@@ -1,0 +1,37 @@
+<h1>Posts</h1>
+<div class="row">
+    <div class="col-md-6">
+        <spinner [visible]="isLoadingPosts"></spinner>
+        <ul class="list-group posts">
+            <li *ngFor="#post of posts" class="list-group-item"
+                [ngClass]="{ active: post === selectedPost }" (click)="onPostSelected(post)">
+                {{ post.title }}
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-6" *ngIf="selectedPost">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ selectedPost.title }}</h3>
+            </div>
+            <div class="panel-body">
+                {{ selectedPost.body }}
+            </div>
+            <hr/>
+            <spinner [visible]="isLoadingComments"></spinner>
+            <div class="media" *ngFor="#comment of selectedPost.comments"  style="padding-left: 5px;">
+                <div class="media-left media-top">
+                    <a href="#">
+                        <img class="media-object thumbnail" src="http://lorempixel.com/80/80/people/?random={{ comment.id }}">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        {{ comment.name }}
+                    </h4>
+                    {{ comment.body }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

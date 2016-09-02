@@ -9,9 +9,9 @@ import {PostsComponent} from "./../../posts/component/posts.component";
 import {NotFoundComponent} from "./../../exception/component/not-found.component";
 
 @RouteConfig([
-    { path: "/", name: "Home", component: HomeComponent, useAsDefault: true },
+    { path: "/", name: "Home", component: HomeComponent },
 
-    { path: "/users", name: "Users", component: UsersComponent },
+    { path: "/users", name: "Users", component: UsersComponent, useAsDefault: true },
     { path: "/users/:id", name: "EditUser", component: SaveUserComponent },
     { path: "/users/new", name: "CreateUser", component: SaveUserComponent },
 

@@ -44,8 +44,8 @@ System.register(['angular2/core', "angular2/router", "./../../navbar/component/n
                 }
                 AppComponent = __decorate([
                     router_1.RouteConfig([
-                        { path: "/", name: "Home", component: home_component_1.HomeComponent, useAsDefault: true },
-                        { path: "/users", name: "Users", component: users_component_1.UsersComponent },
+                        { path: "/", name: "Home", component: home_component_1.HomeComponent },
+                        { path: "/users", name: "Users", component: users_component_1.UsersComponent, useAsDefault: true },
                         { path: "/users/:id", name: "EditUser", component: save_user_component_1.SaveUserComponent },
                         { path: "/users/new", name: "CreateUser", component: save_user_component_1.SaveUserComponent },
                         { path: "/posts", name: "Posts", component: posts_component_1.PostsComponent },
