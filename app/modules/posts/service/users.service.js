@@ -11,7 +11,7 @@ System.register(["angular2/core", "angular2/http", "rxjs/add/operator/map"], fun
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, http_1;
-    var PostsService;
+    var UsersService;
     return {
         setters:[
             function (core_1_1) {
@@ -22,36 +22,24 @@ System.register(["angular2/core", "angular2/http", "rxjs/add/operator/map"], fun
             },
             function (_1) {}],
         execute: function() {
-            PostsService = (function () {
-                function PostsService(_http) {
+            UsersService = (function () {
+                function UsersService(_http) {
                     this._http = _http;
-                    this.POSTS_URL = "https://jsonplaceholder.typicode.com/posts";
+                    this.USERS_URL = "https://jsonplaceholder.typicode.com/users";
                 }
-                PostsService.prototype.getPosts = function (userId) {
-                    var url = this.POSTS_URL;
-                    if (userId) {
-                        url += "?userId=" + userId;
-                    }
+                UsersService.prototype.getUsers = function () {
                     return this._http
-                        .get(url)
-                        .map(function (posts) { return posts.json(); });
+                        .get(this.USERS_URL)
+                        .map(function (users) { return users.json(); });
                 };
-                PostsService.prototype.getPostComments = function (idPost) {
-                    return this._http
-                        .get(this.getCommentsUrl(idPost))
-                        .map(function (comments) { return comments.json(); });
-                };
-                PostsService.prototype.getCommentsUrl = function (idPost) {
-                    return this.POSTS_URL + "/" + idPost + "/comments";
-                };
-                PostsService = __decorate([
+                UsersService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http])
-                ], PostsService);
-                return PostsService;
+                ], UsersService);
+                return UsersService;
             }());
-            exports_1("PostsService", PostsService);
+            exports_1("UsersService", UsersService);
         }
     }
 });
-//# sourceMappingURL=posts.service.js.map
+//# sourceMappingURL=users.service.js.map

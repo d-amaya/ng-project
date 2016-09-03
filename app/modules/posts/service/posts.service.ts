@@ -11,9 +11,13 @@ export class PostsService {
     constructor(private _http: Http) {
     }
 
-    getPosts(): Observable<any> {
+    getPosts(userId?): Observable<any> {
+        var url = this.POSTS_URL;
+        if (userId) {
+            url += `?userId=${userId}`;
+        }
         return this._http
-                   .get(this.POSTS_URL)
+                   .get(url)
                    .map(posts => posts.json());
     }
 
