@@ -20,25 +20,44 @@ System.register(["angular2/core"], function(exports_1, context_1) {
         execute: function() {
             PaginatorComponent = (function () {
                 function PaginatorComponent() {
-                    this.pageSize = 10;
-                    this.items = [];
                     this.pageChanged = new core_1.EventEmitter();
                 }
+                PaginatorComponent.prototype.ngOnChanges = function () {
+                    this.pages = new Array(Math.ceil(this.items.length / this.pageSize));
+                    this.activePage = 0;
+                };
                 PaginatorComponent.prototype.getPageItems = function (indexPage) {
-                    this.pageChanged.emit({ newPage: indexPage, pageSize: this.pageSize });
+                    this.activePage = indexPage;
+                    this.pageChanged.emit({ newPage: indexPage });
+                };
+                PaginatorComponent.prototype.incrementPage = function () {
+                    if (this.activePage < this.pages.length - 1) {
+                        this.activePage += 1;
+                        this.pageChanged.emit({ newPage: this.activePage });
+                    }
+                };
+                PaginatorComponent.prototype.decreasePage = function () {
+                    if (this.activePage > 0) {
+                        this.activePage -= 1;
+                        this.pageChanged.emit({ newPage: this.activePage });
+                    }
                 };
                 __decorate([
-                    core_1.Input(), 
+                    core_1.Input("page-size"), 
+                    __metadata('design:type', Number)
+                ], PaginatorComponent.prototype, "pageSize", void 0);
+                __decorate([
+                    core_1.Input("items"), 
                     __metadata('design:type', Array)
                 ], PaginatorComponent.prototype, "items", void 0);
                 __decorate([
-                    core_1.Output(), 
+                    core_1.Output("page-changed"), 
                     __metadata('design:type', Object)
                 ], PaginatorComponent.prototype, "pageChanged", void 0);
                 PaginatorComponent = __decorate([
                     core_1.Component({
                         selector: "paginator",
-                        template: "\n        <nav aria-label=\"Page navigation\" *ngIf=\"items?.length > pageSize\">\n            <ul class=\"pagination\">\n                <li>\n                    <a href=\"#\" aria-label=\"Previous\">\n                        <span aria-hidden=\"true\">&laquo;</span>\n                    </a>\n                </li>\n                <li *ngFor=\"#item of items; #i = index\">\n                    <a (click)=\"getPageItems(i)\">{{ i + 1 }}</a>\n                </li>\n                <li>\n                    <a href=\"#\" aria-label=\"Next\">\n                        <span aria-hidden=\"true\">&raquo;</span>\n                    </a>\n                </li>\n            </ul>\n        </nav>\n    "
+                        template: "\n        <nav aria-label=\"Page navigation\" *ngIf=\"items?.length > pageSize\">\n            <ul class=\"pagination\">\n                <li [class.disabled]=\"activePage == 0\">\n                    <a (click)=\"decreasePage()\" aria-label=\"Previous\">\n                        <span aria-hidden=\"true\">&laquo;</span>\n                    </a>\n                </li>\n                <li *ngFor=\"#page of pages; #i = index\" [class.active]=\"activePage == i\">\n                    <a (click)=\"getPageItems(i)\">{{ i + 1 }}</a>\n                </li>\n                <li [class.disabled]=\"activePage == pages.length-1\">\n                    <a (click)=\"incrementPage()\" aria-label=\"Next\">\n                        <span aria-hidden=\"true\">&raquo;</span>\n                    </a>\n                </li>\n            </ul>\n        </nav>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], PaginatorComponent);

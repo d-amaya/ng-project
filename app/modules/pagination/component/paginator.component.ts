@@ -1,35 +1,39 @@
-import {Component, Input, Output, EventEmitter} from "angular2/core";
+import {Component, OnChanges, Input, Output, EventEmitter} from "angular2/core";
 
 @Component({
     selector: "paginator",
-    template: `
-        <nav aria-label="Page navigation" *ngIf="items?.length > pageSize">
-            <ul class="pagination">
-                <li>
-                    <a href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li *ngFor="#item of items; #i = index">
-                    <a (click)="getPageItems(i)">{{ i + 1 }}</a>
-                </li>
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    `
+    templateUrl: "app/modules/pagination/template/paginator.template.html"
 })
-export class PaginatorComponent {
+export class PaginatorComponent implements OnChanges {
 
-    pageSize: number = 10;
+    activePage: number;
+    pages: any[];
 
-    @Input() items: any[] = [];
-    @Output() pageChanged = new EventEmitter(); 
+    @Input("page-size") pageSize: number; 
+    @Input("items") items: any[];
+    @Output("page-changed") pageChanged = new EventEmitter(); 
+
+    ngOnChanges() {
+        this.pages = new Array(Math.ceil(this.items.length / this.pageSize));
+        this.activePage = 0;
+    }
 
     getPageItems(indexPage) {
-        this.pageChanged.emit({ newPage: indexPage, pageSize: this.pageSize });
+        this.activePage = indexPage;
+        this.pageChanged.emit({ newPage: indexPage });
+    }
+
+    private incrementPage() {
+        if (this.activePage < this.pages.length - 1) {
+            this.activePage += 1;
+            this.pageChanged.emit({ newPage: this.activePage });
+        }
+    }
+
+    private decreasePage() {
+        if (this.activePage > 0) {
+            this.activePage -= 1;
+            this.pageChanged.emit({ newPage: this.activePage });
+        }
     }
 }

@@ -8,11 +8,15 @@
             </option>
         </select>
         <br>
-        <paginator [items]="posts" (pageChanged)="onPostsPagination($event)"></paginator>
-        <br>
         <spinner [visible]="isLoadingPosts"></spinner>
+        <br>
+        <paginator *ngIf="!isLoadingPosts"
+            [items]="totalPosts" 
+            [page-size]="pageSize"
+            (page-changed)="onPostsPagination($event)">
+        </paginator>
         <ul class="list-group posts" *ngIf="!isLoadingPosts">
-            <li *ngFor="#post of posts" class="list-group-item"
+            <li *ngFor="#post of currentPagePosts" class="list-group-item"
                 [ngClass]="{ active: post === selectedPost }" (click)="onPostSelected(post)">
                 {{ post.title }}
             </li>
