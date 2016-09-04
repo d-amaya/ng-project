@@ -5,7 +5,7 @@
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
-        <li *ngFor="#page of pages; #i = index" [class.active]="activePage == i">
+        <li *ngFor="let page of pages; let i = index" [class.active]="activePage == i">
             <a (click)="getPageItems(i)">{{ i + 1 }}</a>
         </li>
         <li [class.disabled]="activePage == pages.length-1">

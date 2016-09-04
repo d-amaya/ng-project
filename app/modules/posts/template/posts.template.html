@@ -3,7 +3,7 @@
     <div class="col-md-6">
         <select class="form-control" (change)="onUserSelected({ userId: userSelect.value})" #userSelect>
             <option value="">Select a user...</option>
-            <option *ngFor="#user of users" value="{{ user.id }}">
+            <option *ngFor="let user of users" value="{{ user.id }}">
                 {{ user.name }}
             </option>
         </select>
@@ -16,7 +16,7 @@
             (page-changed)="onPostsPagination($event)">
         </paginator>
         <ul class="list-group posts" *ngIf="!isLoadingPosts">
-            <li *ngFor="#post of currentPagePosts" class="list-group-item"
+            <li *ngFor="let post of currentPagePosts" class="list-group-item"
                 [ngClass]="{ active: post === selectedPost }" (click)="onPostSelected(post)">
                 {{ post.title }}
             </li>
@@ -32,7 +32,7 @@
             </div>
             <hr/>
             <spinner [visible]="isLoadingComments"></spinner>
-            <div class="media" *ngFor="#comment of selectedPost.comments"  style="padding-left: 5px;">
+            <div class="media" *ngFor="let comment of selectedPost.comments"  style="padding-left: 5px;">
                 <div class="media-left media-top">
                     <a href="#">
                         <img class="media-object thumbnail" src="http://lorempixel.com/80/80/people/?random={{ comment.id }}">

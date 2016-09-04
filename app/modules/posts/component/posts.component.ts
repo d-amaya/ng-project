@@ -1,5 +1,6 @@
-import {Component, OnInit} from "angular2/core";
+import {Component, OnInit} from "@angular/core";
 import {Observable} from "rxjs/Observable";
+import * as _ from "underscore";
 import "rxjs/add/observable/from";
 import "rxjs/add/observable/forkJoin";
 import "rxjs/add/operator/retry";
@@ -46,7 +47,7 @@ export class PostsComponent implements OnInit {
             .retry(2)
             .catch(err => {
                 console.log("There was an error while consumming de comments API.", err);
-                return Observable.of([[]]);
+                return Observable.from([[]]);
             })
             .subscribe(
                 comments => this.selectedPost.comments = comments,
@@ -63,7 +64,6 @@ export class PostsComponent implements OnInit {
                 },
                 error => console.log("Ocurrio un error while transforming the posts.", error),
                 () => {
-                    console.log("The loadPosts action is Done.");
                     this.isLoadingPosts = false;
                 }
             );
@@ -71,8 +71,7 @@ export class PostsComponent implements OnInit {
 
     onPostsPagination($event) {
         var intitalPost = $event.newPage * this.pageSize;
-        var finalPost = intitalPost + this.pageSize;
-        this.currentPagePosts = _.take(_.rest(this.totalPosts, intitalPost), finalPost);
+        this.currentPagePosts = _.take(_.rest(this.totalPosts, intitalPost), this.pageSize);
     }
 
     private prepareInitialDataForm() {

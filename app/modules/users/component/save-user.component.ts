@@ -1,6 +1,6 @@
-import {Component, OnInit} from "angular2/core";
-import {FormBuilder, ControlGroup, Validators} from "angular2/common";
-import {Router, RouteParams, CanDeactivate} from "angular2/router";
+import {Component, OnInit} from "@angular/core";
+import {FormBuilder, ControlGroup, Validators} from "@angular/common";
+import {Router, RouteParams, CanDeactivate} from "@angular/router-deprecated";
 import {Observable} from "rxjs/Observable";
 
 import {UsersService} from "./../service/users.service";
@@ -56,8 +56,7 @@ export class SaveUserComponent implements CanDeactivate, OnInit {
                         if (error.status === 404) {
                             this._router.navigate(["NotFound"]);
                         }
-                    },
-                    () => console.log("Getting user by id is done.")
+                    }
                 );
         }       
     }

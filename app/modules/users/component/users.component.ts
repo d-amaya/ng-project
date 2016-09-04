@@ -1,6 +1,7 @@
-import {Component, OnInit} from "angular2/core";
-import {ROUTER_DIRECTIVES} from "angular2/router";
+import {Component, OnInit} from "@angular/core";
+import {ROUTER_DIRECTIVES} from "@angular/router-deprecated";
 import {Observable} from "rxjs/Observable";
+import "rxjs/add/observable/from";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/retry";
 
@@ -13,7 +14,7 @@ import {UsersService} from "./../service/users.service";
     directives: [ROUTER_DIRECTIVES]
 })
 export class UsersComponent implements OnInit {
-    users: any[];
+    users;
 
     constructor(private _usersService: UsersService) {
     }
@@ -22,32 +23,33 @@ export class UsersComponent implements OnInit {
         this._usersService.getUsers()
             .retry(2)
             .catch(error => {
-                console.log("An error ocurred when consuming the users API.");
-                return Observable.of([]);
+                console.log("An error ocurred when consuming the users API.", error);
+                return Observable.from([[]]);
             })
             .subscribe(
                 users => this.users = users,
-                error => console.log("An error ocurred when transforming data user."),
-                () => console.log("Users API consuming is done.")
+                error => console.log("An error ocurred when transforming data user.")
             )
     }
 
     deleteUser(user) {
-        console.log(user)
         var confirmation = confirm("Are you sure you want to delete the user?");
-        if (confirmation) {
-            var index = this.users.indexOf(user);
+        if (!confirmation) {
+            return;
+        }
+
+        var index = this.users.indexOf(user);
             this.users.splice(index, 1);
 
-            this._usersService.deleteUser(user.id)
+            this._usersService
+                .deleteUser(user.id)
                 .subscribe(
                     null,
                     error => {
-                        console.log(error);
+                        console.log("It was not possible to delete the user.", error);
                         alert("It was not possible to delete the user.");
                         this.users.splice(index, 0, user);
                     }
                 );
-        }
     }
 }

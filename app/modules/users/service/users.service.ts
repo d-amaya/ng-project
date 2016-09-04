@@ -1,5 +1,5 @@
-import {Injectable} from "angular2/core";
-import {Http} from "angular2/http";
+import {Injectable} from "@angular/core";
+import {Http} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/map";
 
@@ -13,7 +13,7 @@ export class UsersService {
     constructor(private _http: Http) {
     }
 
-    getUsers(): Observable<any> {
+    getUsers(): Observable<any[]> {
         return this._http
                    .get(this.USERS_URL)
                    .map(response => response.json());
