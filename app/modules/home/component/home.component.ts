@@ -12,12 +12,12 @@ import {Component} from "angular2/core";
                         </a>
                         <div style="padding-left: 60px;">
                           <div _ngcontent-jsd-4="" style="padding-left: 5px; float: left;">
-                              <a href="https://co.linkedin.com/in/daniel-roldan-amaya-68498499" _ngcontent-jsd-4="">
+                              <a href="https://co.linkedin.com/in/daniel-roldan-amaya-68498499" target="_blank" _ngcontent-jsd-4="">
                                   <img class="media-object" height="45" src="assets/images/LinkedIn.png" width="45" _ngcontent-jsd-4="">
                               </a>
                           </div>
                           <div _ngcontent-jsd-4="" style="padding-left: 5px; float: left;">
-                              <a href="https://github.com/d-amaya" _ngcontent-jsd-4="">
+                              <a href="https://github.com/d-amaya" target="_blank" _ngcontent-jsd-4="">
                                   <img class="media-object" height="45" src="assets/images/Octocat.png" width="45" _ngcontent-jsd-4="">
                               </a>
                           </div>
@@ -35,7 +35,7 @@ import {Component} from "angular2/core";
                 </div>
                 <div>
                     <div style="padding-left: 5px; float: right;">
-                        <a class="btn btn-primary btn-lg" role="button" href="https://github.com/d-amaya/ng-project" >
+                        <a class="btn btn-primary btn-lg" role="button" target="_blank" href="https://github.com/d-amaya/ng-project" >
                             GitHub Repository
                         </a>
                     </div>
