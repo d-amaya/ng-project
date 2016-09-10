@@ -1,7 +1,8 @@
-import {Component, OnInit} from "@angular/core";
-import {FormBuilder, ControlGroup, Validators} from "@angular/common";
-import {Router, RouteParams, CanDeactivate} from "@angular/router-deprecated";
+import {Component, OnInit, OnDestroy} from "@angular/core";
+import {FormBuilder, Validators, FormGroup} from "@angular/forms";
+import {Router, ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs/Observable";
+import {Subscription} from "rxjs/Subscription";
 
 import {UsersService} from "./../service/users.service";
 import {CommonValidators} from "./../../../shared/common.validator";
@@ -14,35 +15,44 @@ import {User} from "./../../../entity/user";
         .ng-touched.ng-invalid {
             border: 1px solid red !important;
         }
-    `],
-    providers: [UsersService]
+    `]
 })
-export class SaveUserComponent implements CanDeactivate, OnInit {
-    form: ControlGroup;
+export class SaveUserComponent implements OnDestroy, OnInit {
+    form: FormGroup;
     title: string = "New User";
+    subscription: Subscription;
 
     user = new User();
 
     constructor(private _formBuilder: FormBuilder, 
                 private _router: Router,
-                private _routeParams: RouteParams,
+                private _route: ActivatedRoute,
                 private _usersService: UsersService) {
 
         this.form = this._formBuilder.group({
-            name:  ["", Validators.compose([Validators.required])],
-            email: ["", Validators.compose([Validators.required, CommonValidators.validEmailFormat])],
-            phone: ["", Validators.compose([Validators.required, Validators.minLength(7)])],
+            name:  ["", Validators.required],
+            email: ["", [Validators.required, CommonValidators.validEmailFormat]],
+            phone: ["", [Validators.required, Validators.minLength(7)]],
             address: this._formBuilder.group({
-                street:  ["", Validators.compose([Validators.required])],
-                suite:   ["", Validators.compose([Validators.required])],
-                city:    ["", Validators.compose([Validators.required])],
-                zipCode: ["", Validators.compose([Validators.required])]
+                street:  ["", Validators.required],
+                suite:   ["", Validators.required],
+                city:    ["", Validators.required],
+                zipCode: ["", Validators.required]
             })
         });
     }
 
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
+
     ngOnInit() {
-        var userId = this._routeParams.get("id");
+        var userId;
+
+        this.subscription = this._route.params.subscribe(params => {
+            userId = +params["id"];
+        })
+
         if (userId) {
             this.title = "Edit User";
             this._usersService.getUser(userId)
@@ -54,7 +64,7 @@ export class SaveUserComponent implements CanDeactivate, OnInit {
                     },
                     error => {
                         if (error.status === 404) {
-                            this._router.navigate(["NotFound"]);
+                            this._router.navigate(["not-found"]);
                         }
                     }
                 );
@@ -68,6 +78,7 @@ export class SaveUserComponent implements CanDeactivate, OnInit {
     }
 
     onSubmit() {
+        console.log(this.user);
         var saveUserObservable: Observable<any>; 
         if (this.user.id) {
             saveUserObservable = this._usersService.updateUser(this.user.id, this.user);
@@ -77,7 +88,7 @@ export class SaveUserComponent implements CanDeactivate, OnInit {
         
         saveUserObservable.subscribe(res => {
             //this.form.markAsPristine();
-            this._router.navigate(["Users"]);
+            this._router.navigate(["users"]);
         });
     }
 }

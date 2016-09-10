@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {ROUTER_DIRECTIVES} from "@angular/router-deprecated";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/from";
 import "rxjs/add/operator/catch";
@@ -9,9 +8,7 @@ import {UsersService} from "./../service/users.service";
 
 @Component({
     selector: "users",
-    templateUrl: "app/modules/users/template/users.template.html",
-    providers: [UsersService],
-    directives: [ROUTER_DIRECTIVES]
+    templateUrl: "app/modules/users/template/users.template.html"
 })
 export class UsersComponent implements OnInit {
     users;

@@ -14,7 +14,7 @@
                 <td> {{ user.email }} </td>
                 <td> {{ user.website }} </td>
                 <td align="center"> 
-                    <a [routerLink]="['EditUser', { id: user.id }]">
+                    <a [routerLink]="['/users', user.id]">
                         <i class="glyphicon glyphicon-edit"></i>
                     </a>
                 </td>
@@ -27,5 +27,5 @@
         </tbody>
     </table>
     <br>
-    <a [routerLink]="['CreateUser']" class="btn btn-primary">Add User</a>
+    <a routerLink="/users/new" class="btn btn-primary">Add User</a>
 </div>

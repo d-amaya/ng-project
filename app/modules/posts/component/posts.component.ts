@@ -7,17 +7,13 @@ import "rxjs/add/operator/retry";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/mergeMap";
 
-import {SpinnerComponent} from "./../../spinner/component/spinner.component";
 import {PostsService} from "./../service/posts.service";
-import {UsersService} from "./../service/users.service";
-import {PaginatorComponent} from "./../../pagination/component/paginator.component";
+import {UsersService} from "./../../users/service/users.service";
 
 @Component({
     selector: "posts",
     templateUrl: "app/modules/posts/template/posts.template.html",
-    styleUrls: ["app/modules/posts/template/posts.style.css"],
-    providers: [PostsService, UsersService],
-    directives: [SpinnerComponent, PaginatorComponent]
+    styleUrls: ["app/modules/posts/template/posts.style.css"]
 })
 export class PostsComponent implements OnInit {
     isLoadingComments: boolean = false;

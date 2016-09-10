@@ -1,38 +1,39 @@
 <h1>{{ title }}</h1>
 <div class="row">
     <div class="col-md-6 well">
-        <form [ngFormModel]="form" (ngSubmit)="onSubmit()">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <fieldset>
                 <legend>User</legend>
                 <div class="form-group">
                     <label>Name</label>
-                    <input id="name" type="text" class="form-control" [(ngModel)]="user.name" ngControl="name" #name="ngForm"/>
-                    <div *ngIf="name.touched && !name.valid">
-                        <div *ngIf="name.errors?.required" class="alert alert-danger">
+                    <input name="name" type="text" class="form-control" 
+                            [(ngModel)]="user.name" formControlName="name" />
+                    <div *ngIf="form.controls.name.touched && !form.controls.name.valid">
+                        <div *ngIf="form.controls.name.errors?.required" class="alert alert-danger">
                             The name is required.
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input id="email" type="text" class="form-control" [(ngModel)]="user.email" ngControl="email" #email="ngForm" />
-                    <div *ngIf="email.touched && !email.valid">
-                        <div *ngIf="email.errors?.required" class="alert alert-danger">
+                    <input type="text" class="form-control" [(ngModel)]="user.email" formControlName="email" />
+                    <div *ngIf="form.controls.email.touched && !form.controls.email.valid">
+                        <div *ngIf="form.controls.email.errors?.required" class="alert alert-danger">
                             The email is required.
                         </div>
-                        <div *ngIf="email.errors?.validEmailFormat" class="alert alert-danger">
+                        <div *ngIf="form.controls.email.errors?.validEmailFormat" class="alert alert-danger">
                             The email does not have valid format.
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Phone</label>
-                    <input id="phone" type="text" class="form-control" [(ngModel)]="user.phone" ngControl="phone" #phone="ngForm"/>
-                    <div *ngIf="phone.touched && !phone.valid" class="alert alert-danger">
-                        <div *ngIf="phone.errors?.required">
+                    <input type="text" class="form-control" [(ngModel)]="user.phone" formControlName="phone" />
+                    <div *ngIf="form.controls.phone.touched && !form.controls.phone.valid" class="alert alert-danger">
+                        <div *ngIf="form.controls.phone.errors?.required">
                             The phone is required.
                         </div>
-                        <div *ngIf="phone.errors?.minlength">
+                        <div *ngIf="form.controls.phone.errors?.minlength">
                             The phone should be at least {{ phone.errors.minlength.requiredLength }} characters.
                         </div>
                     </div>
@@ -40,43 +41,43 @@
             </fieldset>
             <fieldset>
                 <legend>Address</legend>
-                <div ngControlGroup="address">
+                <div formGroupName="address">
                     <div class="form-group">
                         <label>Street</label>
-                        <input id="street" type="text" class="form-control" 
-                               [(ngModel)]="user.address.street" ngControl="street" #street="ngForm" />
-                        <div *ngIf="street.touched && !street.valid">
-                            <div *ngIf="street.errors?.required" class="alert alert-danger">
+                        <input type="text" class="form-control" 
+                               [(ngModel)]="user.address.street" formControlName="street" />
+                        <div *ngIf="form.controls.address.controls.street.touched && !form.controls.address.controls.street.valid">
+                            <div *ngIf="form.controls.address.controls.street.errors?.required" class="alert alert-danger">
                                 The street is required.
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Suite</label>
-                        <input id="suite" type="text" class="form-control" 
-                               [(ngModel)]="user.address.suite" ngControl="suite" #suite="ngForm"/>
-                        <div *ngIf="suite.touched && !suite.valid">
-                            <div *ngIf="suite.errors?.required" class="alert alert-danger">
+                        <input type="text" class="form-control" 
+                               [(ngModel)]="user.address.suite" formControlName="suite" />
+                        <div *ngIf="form.controls.address.controls.suite.touched && !form.controls.address.controls.suite.valid">
+                            <div *ngIf="form.controls.address.controls.suite.errors?.required" class="alert alert-danger">
                                 The suite is required.
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>City</label>
-                        <input id="city" type="text" class="form-control" 
-                               [(ngModel)]="user.address.city" ngControl="city" #city="ngForm"/>
-                        <div *ngIf="city.touched && !city.valid">
-                            <div *ngIf="city.errors?.required" class="alert alert-danger">
+                        <input type="text" class="form-control" 
+                               [(ngModel)]="user.address.city" formControlName="city" />
+                        <div *ngIf="form.controls.address.controls.city.touched && !form.controls.address.controls.city.valid">
+                            <div *ngIf="form.controls.address.controls.city.errors?.required" class="alert alert-danger">
                                 The city is required.
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Zip Code</label>
-                        <input id="zipCode" type="text" class="form-control" 
-                               [(ngModel)]="user.address.zipcode" ngControl="zipCode" #zipCode="ngForm"/>
-                        <div *ngIf="zipCode.touched && !zipCode.valid">
-                            <div *ngIf="zipCode.errors?.required" class="alert alert-danger">
+                        <input type="text" class="form-control" 
+                               [(ngModel)]="user.address.zipcode" formControlName="zipCode" />
+                        <div *ngIf="form.controls.address.controls.zipCode.touched && !form.controls.address.controls.zipCode.valid">
+                            <div *ngIf="form.controls.address.controls.zipCode.errors?.required" class="alert alert-danger">
                                 The zipCode is required.
                             </div>
                         </div>
