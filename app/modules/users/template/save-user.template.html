@@ -34,7 +34,7 @@
                             The phone is required.
                         </div>
                         <div *ngIf="form.controls.phone.errors?.minlength">
-                            The phone should be at least {{ phone.errors.minlength.requiredLength }} characters.
+                            The phone should be at least {{ form.controls.phone.errors.minlength.requiredLength }} characters.
                         </div>
                     </div>
                 </div>
