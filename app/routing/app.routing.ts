@@ -16,7 +16,7 @@ const appRoute: Routes = [
 
     { path: "posts", component: PostsComponent },
 
-    { path: "**", component: NotFoundComponent }
+    { path: "**", component: HomeComponent }
 ];
 
 export const appRoutingProviders: any[] = [];
