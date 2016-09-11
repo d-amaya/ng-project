@@ -4,6 +4,7 @@ import {Router, ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 import {Subscription} from "rxjs/Subscription";
 
+import {FormComponent} from "../../../auth/prevent-unsaved-changes-guard.service";
 import {UsersService} from "./../service/users.service";
 import {CommonValidators} from "./../../../shared/common.validator";
 import {User} from "./../../../entity/user";
@@ -17,7 +18,7 @@ import {User} from "./../../../entity/user";
         }
     `]
 })
-export class SaveUserComponent implements OnDestroy, OnInit {
+export class SaveUserComponent implements OnDestroy, OnInit, FormComponent {
     form: FormGroup;
     title: string = "New User";
     subscription: Subscription;
@@ -71,10 +72,8 @@ export class SaveUserComponent implements OnDestroy, OnInit {
         }       
     }
 
-    routerCanDeactivate(next, prev) {
-        if (next.urlPath !== "not-found" && !this.form.valid) {
-            return confirm("You have unsaved changes. Are you sure you want to navigate away?");
-        }
+    hasUnsavedChanges() {
+        return this.form.dirty;
     }
 
     onSubmit() {

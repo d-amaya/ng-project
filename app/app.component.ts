@@ -1,5 +1,8 @@
 import {Component} from '@angular/core';
 
+import {AuthService} from "./auth/auth.service";
+import {AuthGuard} from "./auth/auth-guard.service";
+
 @Component({
 	selector: "my-app",
     template: `
@@ -15,4 +18,9 @@ import {Component} from '@angular/core';
     `]
 })
 export class AppComponent {
+
+    // This sould be done in a logging form, but this is just for demonstration.
+    constructor(private _authServie: AuthService) {
+        _authServie.login("username", "password");
+    }
 }

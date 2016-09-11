@@ -8,6 +8,9 @@ import { AppComponent }  from './app.component';
 import { routing, appRoutingProviders } from "./app.routing";
 import { usersRouting } from './modules/users/users.routing';
 import { postsRouting } from './modules/posts/posts.routing';
+import {AuthService} from "./auth/auth.service";
+import {AuthGuard} from "./auth/auth-guard.service";
+import { PreventUnsavedChangesGuard } from "./auth/prevent-unsaved-changes-guard.service";
 
 // Imported Modules
 import { HomeModule }  from './modules/home/home.module';
@@ -28,7 +31,12 @@ import { UsersModule }  from './modules/users/users.module';
     routing,
   ],
   declarations: [ AppComponent ],
-  providers: [ appRoutingProviders ],
+  providers: [ 
+    appRoutingProviders, 
+    AuthService, 
+    AuthGuard, 
+    PreventUnsavedChangesGuard 
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

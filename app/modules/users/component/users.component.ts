@@ -4,7 +4,7 @@ import "rxjs/add/observable/from";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/retry";
 
-import {UsersService} from "./../service/users.service";
+import {UsersService} from "../service/users.service";
 
 @Component({
     selector: "users",
