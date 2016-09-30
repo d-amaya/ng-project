@@ -18,3 +18,5 @@ RUN cp -R app /var/www/html/
 RUN cp -R assets /var/www/html/
 RUN cp -R default /var/www/html/
 RUN cp -R typings /var/www/html/
+
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
