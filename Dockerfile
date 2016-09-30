@@ -1,7 +1,13 @@
-FROM eboraas/apache
+FROM debian:stable
 MAINTAINER vitavel2001@gmail.com
 
-RUN curl -sL https://deb.nodesource.com/setup_6.x | -E bash -
+RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+ENV LANG en_US.utf8
+
+apt-get -y install apache2
+
+RUN curl -sL https://deb.nodesource.com/setup_0.12 | sudo -E bash 
 RUN apt-get install -y nodejs
 RUN apt-get install -y build-essential
 
@@ -9,14 +15,14 @@ RUN cp package.json /usr/src/package.json
 RUN npm install
 RUN typescript install
 
-RUN cp index.html /var/www/html/
-RUN cp systemjs.config.js /var/www/html/
-RUN cp tsconfig.json /var/www/html/
-RUN cp typings.json /var/www/html/
+RUN cp index.html /var/www/
+RUN cp systemjs.config.js /var/www/
+RUN cp tsconfig.json /var/www/
+RUN cp typings.json /var/www/
 
-RUN cp -R app /var/www/html/
-RUN cp -R assets /var/www/html/
-RUN cp -R default /var/www/html/
-RUN cp -R typings /var/www/html/
+RUN cp -R app /var/www/
+RUN cp -R assets /var/www/
+RUN cp -R default /var/www/
+RUN cp -R typings /var/www/
 
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
