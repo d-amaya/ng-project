@@ -1,7 +1,7 @@
 FROM eboraas/apache
 MAINTAINER vitavel2001@gmail.com
 
-RUN curl -sL https://deb.nodesource.com/setup_0.12 | bash -
+RUN curl -sL https://deb.nodesource.com/setup_6.x | -E bash -
 RUN apt-get install -y nodejs
 RUN apt-get install -y build-essential
 
