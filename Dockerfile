@@ -1,7 +1,7 @@
 FROM eboraas/apache
 MAINTAINER vitavel2001@gmail.com
 
-RUN apt-get install -y nodejs
+RUN apt-get install -y node
 RUN apt-get install -y build-essential
 
 RUN cp package.json /usr/src/package.json
