@@ -1,7 +1,8 @@
 FROM eboraas/apache
 MAINTAINER vitavel2001@gmail.com
 
-RUN apt-get install -y node
+RUN curl -sL https://deb.nodesource.com/setup_0.12 | bash -
+RUN sudo apt-get install -y nodejs
 RUN apt-get install -y build-essential
 
 RUN cp package.json /usr/src/package.json
