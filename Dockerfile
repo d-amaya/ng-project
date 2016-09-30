@@ -2,7 +2,7 @@ FROM debian:stable
 MAINTAINER vitavel2001@gmail.com
 
 RUN apt-get update 
-RUN apt-get install php5-curl
+RUN apt-get install -y php5-curl
 RUN curl -sL https://deb.nodesource.com/setup_0.12 | -E bash
 RUN apt-get install -y nodejs
 RUN apt-get install -y build-essential
