@@ -1,16 +1,20 @@
-FROM node:latest
+FROM eboraas/apache
 MAINTAINER vitavel2001@gmail.com
 
-# Add package.json to allow for caching
+RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+RUN apt-get install -y nodejs
+RUN apt-get install -y build-essential
+
 RUN cp package.json /usr/src/package.json
-# Install app dependencies
 RUN npm install
-# Bundle app source and tests
-RUN cp app.js /usr/src/
-RUN cp test /usr/src/test
-RUN cp script /usr/src/script
-# user to non-privileged user
-USER nobody
-# Expose the application port and run application
-EXPOSE 5000
-CMD [“node”,”app.js”]
+RUN typescript install
+
+RUN cp index.html /var/www/html/
+RUN cp systemjs.config.js /var/www/html/
+RUN cp tsconfig.json /var/www/html/
+RUN cp typings.json /var/www/html/
+
+RUN cp -R app /var/www/html/
+RUN cp -R assets /var/www/html/
+RUN cp -R default /var/www/html/
+RUN cp -R typings /var/www/html/
