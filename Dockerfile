@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM ubuntu:latest
 MAINTAINER d-amaya <roldaniel89@gmail.com> 
 
 RUN apt-get update
