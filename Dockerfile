@@ -1,12 +1,12 @@
 FROM ubuntu:latest
 MAINTAINER d-amaya <roldaniel89@gmail.com> 
 
-RUN sudo apt-get update
-RUN sudo apt-get -y install apache2
+RUN apt-get update
+RUN apt-get -y install apache2
 RUN curl -sL https://deb.nodesource.com/setup | sudo bash -
-RUN sudo apt-get -y install nodejs
-RUN sudo apt-get -y install build-essential
-RUN sudo npm install -g typescript
+RUN apt-get -y install nodejs
+RUN apt-get -y install build-essential
+RUN npm install -g typescript
 
 COPY app /var/www/html/app
 COPY assets /var/www/html/assets
