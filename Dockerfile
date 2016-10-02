@@ -1,0 +1,27 @@
+FROM ubuntu:latest
+MAINTAINER d-amaya <roldaniel89@gmail.com> 
+
+RUN sudo apt-get update
+RUN sudo apt-get -y install apache2
+RUN curl -sL https://deb.nodesource.com/setup | sudo bash -
+RUN sudo apt-get -y install nodejs
+RUN sudo apt-get -y install build-essential
+RUN sudo npm install -g typescript
+
+COPY app /var/www/html/app
+COPY assets /var/www/html/assets
+COPY typings /var/www/html/typings
+COPY index.html /var/www/html/
+COPY package.json /var/www/html/
+COPY systemjs.config.js /var/www/html/
+COPY tsconfig.json /var/www/html/
+COPY typings.json /var/www/html/
+
+WORKDIR /var/www/html/
+RUN tsc
+RUN npm install
+
+EXPOSE 80
+EXPOSE 443
+
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
