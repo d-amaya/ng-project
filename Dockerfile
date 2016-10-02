@@ -8,7 +8,7 @@ RUN apt-get -y install nodejs
 RUN apt-get -y install npm
 RUN npm install -g typescript
 
-RUN alias node=nodejs
+RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 COPY app /var/www/html/app
 COPY assets /var/www/html/assets
