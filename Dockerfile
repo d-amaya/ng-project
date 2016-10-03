@@ -10,7 +10,7 @@ RUN apt-get -y install npm
 RUN npm install -g typescript
 RUN chmod 777 /usr/local/bin/tsc
 RUN sed -i -e 's/\/usr\/bin\/env node/\/usr\/bin node/g' /usr/local/bin/tsc
-RUN ln -s /usr/local/bin/nodejs /usr/bin/node
+RUN ln -s $(which nodejs) /usr/bin/node
 
 COPY app /var/www/html/app
 COPY assets /var/www/html/assets
