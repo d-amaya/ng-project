@@ -22,6 +22,7 @@ COPY tsconfig.json /var/www/html/
 COPY typings.json /var/www/html/
 
 WORKDIR /var/www/html/
+RUN npm config set registry http://registry.npmjs.org/
 RUN npm install
 RUN npm run tsc
 
