@@ -23,7 +23,6 @@ COPY typings.json /var/www/html/
 
 WORKDIR /var/www/html/
 RUN npm install
-RUN tsc
 
 EXPOSE 80
 EXPOSE 443
