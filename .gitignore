@@ -5,5 +5,6 @@ node_modules
 .vscode
 
 # Build Generated Files
-# app/**/*.js
+app/**/*.js
 app/**/*.js.map
+
