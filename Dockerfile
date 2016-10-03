@@ -6,7 +6,6 @@ RUN apt-get -y install apache2
 RUN curl -sL https://deb.nodesource.com/setup | bash -
 RUN apt-get -y install nodejs
 RUN apt-get -y install npm
-RUN npm install -g typescript
 
 RUN ln -s /usr/local/bin/nodejs /usr/bin/node
 
@@ -21,7 +20,7 @@ COPY typings.json /var/www/html/
 
 WORKDIR /var/www/html/
 RUN npm install
-RUN tsc
+RUN npm run tsc
 
 EXPOSE 80
 EXPOSE 443
