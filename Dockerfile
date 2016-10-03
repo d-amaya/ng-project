@@ -7,6 +7,8 @@ RUN curl -sL https://deb.nodesource.com/setup | bash -
 RUN apt-get -y install nodejs
 RUN apt-get -y install npm
 
+RUN npm install -g typescript
+RUN sed -i -e 's/\/usr\/bin\/env node/\/usr\/bin node' /usr/local/bin/tsc
 RUN ln -s /usr/local/bin/nodejs /usr/bin/node
 
 COPY app /var/www/html/app
@@ -20,7 +22,7 @@ COPY typings.json /var/www/html/
 
 WORKDIR /var/www/html/
 RUN npm install
-RUN npm run tsc
+RUN tsc
 
 EXPOSE 80
 EXPOSE 443
