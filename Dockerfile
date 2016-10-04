@@ -6,14 +6,9 @@ RUN apt-get -y install curl
 RUN apt-get -y install apache2
 RUN curl -sL https://deb.nodesource.com/setup | bash -
 RUN apt-get -y install nodejs
-RUN apt-get -y install npm
-
 
 RUN npm config set registry http://registry.npmjs.org/
 RUN npm install -g typescript
-RUN chmod 777 /usr/local/bin/tsc
-RUN sed -i -e 's/\/usr\/bin\/env node/\/usr\/bin nodejs/g' /usr/local/bin/tsc
-RUN ln -s "$(which nodejs)" /usr/bin/node
 
 COPY app /var/www/html/app
 COPY assets /var/www/html/assets
