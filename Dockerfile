@@ -2,7 +2,7 @@ FROM ubuntu:latest
 MAINTAINER d-amaya <roldaniel89@gmail.com> 
 
 RUN apt-get update
-RUN apt-get install curl
+RUN apt-get -y install curl
 RUN apt-get -y install apache2
 RUN curl -sL https://deb.nodesource.com/setup | bash -
 RUN apt-get -y install nodejs
