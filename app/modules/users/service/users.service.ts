@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
+import {Http, Headers, RequestOptions} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/map";
 
@@ -8,7 +8,9 @@ import {User} from "./../../../entity/user";
 @Injectable()
 export class UsersService {
 
-    private USERS_URL = "https://jsonplaceholder.typicode.com/users";
+    private USERS_URL = "http://127.0.0.1:8080/users";
+    private HEADERS = new Headers({ 'Content-Type': 'application/json' });
+    private OPTIONS = new RequestOptions({ headers: this.HEADERS })
 
     constructor(private _http: Http) {
     }
@@ -27,13 +29,13 @@ export class UsersService {
 
     createUser(user: User) {
         return this._http
-                   .post(this.USERS_URL, JSON.stringify(user))
+                   .post(this.USERS_URL, JSON.stringify(user), this.OPTIONS)
                    .map(response => response.json());
     }
 
     updateUser(userId, user: User) {
         return  this._http
-                    .put(this.getUserUrl(userId),JSON.stringify(user))
+                    .put(this.getUserUrl(userId),JSON.stringify(user), this.OPTIONS)
                     .map(response => response.json());
     }
 
