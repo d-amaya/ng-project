@@ -8,7 +8,8 @@ import {User} from "./../../../entity/user";
 @Injectable()
 export class UsersService {
 
-    private USERS_URL = "http://127.0.0.1:8080/users";
+    //private USERS_URL = "http://jsonplaceholder.typicode.com/users";
+    private USERS_URL = "http://54.71.165.246:8080/users";
     private HEADERS = new Headers({ 'Content-Type': 'application/json' });
     private OPTIONS = new RequestOptions({ headers: this.HEADERS })
 
