@@ -9,7 +9,7 @@ import {User} from "./../../../entity/user";
 export class UsersService {
 
     //private USERS_URL = "http://jsonplaceholder.typicode.com/users";
-    private USERS_URL = "http://54.71.165.246:8080/users";
+    private USERS_URL = "http://gtr2-sura.ceiba.com.co:80/users";
     private HEADERS = new Headers({ 'Content-Type': 'application/json' });
     private OPTIONS = new RequestOptions({ headers: this.HEADERS })
 
